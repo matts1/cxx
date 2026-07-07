@@ -168,6 +168,13 @@ private:
 
   std::array<std::uintptr_t, 2> repr;
 };
+
+#if __cplusplus >= 201703L
+inline Str cxx_to_rust(std::string_view view) { return Str(view); }
+#endif
+
+inline Str cxx_to_rust(const std::string &s) { return Str(s); }
+
 #endif // CXXBRIDGE1_RUST_STR
 
 #ifndef CXXBRIDGE1_RUST_SLICE
@@ -527,7 +534,7 @@ using is_relocatable = IsRelocatable<T>;
 #ifndef CXXBRIDGE1_PANIC
 #define CXXBRIDGE1_PANIC
 template <typename Exception>
-void panic [[noreturn]] (const char *msg);
+void panic [[noreturn]](const char *msg);
 #endif // CXXBRIDGE1_PANIC
 
 #ifndef CXXBRIDGE1_RUST_FN

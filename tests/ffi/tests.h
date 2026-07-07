@@ -235,7 +235,19 @@ const std::vector<uint8_t> &c_lifetime_elision_fn(const C &c);
 rust::String cOverloadedFunction(int32_t x);
 rust::String cOverloadedFunction(rust::Str x);
 
+enum AEnumCxx {
+  AVal,
+  BVal = 2020,
+  CVal,
+};
+
+AEnumCxx type_conversion();
+
 } // namespace tests
+
+namespace rust {
+inline ::A::AEnum cxx_to_rust(tests::AEnumCxx e) { return static_cast<::A::AEnum>(e); }
+} // namespace rust
 
 namespace other {
 void ns_c_take_trivial(::tests::D d);
